@@ -20,8 +20,9 @@ namespace MyGame
         private int bombs;
         private int power;
         private int graze;
+        public PlayerReimu player;
 
-        public ScrollingBackground(Texture2D texture, int speed, Texture2D hud, SpriteFont font)
+        public ScrollingBackground(Texture2D texture, int speed, Texture2D hud, SpriteFont font, PlayerReimu player)
         {
             this.texture = texture;
             this.speed = speed;
@@ -29,11 +30,11 @@ namespace MyGame
             position2 = new Vector2(50, -texture.Height);
             this.HUD = hud;
             this.font = font;
-
+            this.player = player;
             score = 0;
             lives = 3;
             bombs = 3;
-            power = 0;
+            player.Power = 0;
             graze = 0;
         }
 
@@ -58,7 +59,7 @@ namespace MyGame
             spriteBatch.DrawString(font, "SCORE: " + score, new Vector2(669, 25), Color.White);
             spriteBatch.DrawString(font, "LIVES: " + lives, new Vector2(669, 45), Color.White);
             spriteBatch.DrawString(font, "BOMBS: " + bombs, new Vector2(669, 65), Color.White);
-            spriteBatch.DrawString(font, "POWER: " + power, new Vector2(669, 85), Color.White);
+            spriteBatch.DrawString(font, "POWER: " + player.Power, new Vector2(669, 85), Color.White);
             spriteBatch.DrawString(font, "GRAZE: " + graze, new Vector2(669, 105), Color.White);
         }
 

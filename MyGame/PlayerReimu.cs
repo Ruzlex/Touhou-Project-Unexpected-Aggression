@@ -12,7 +12,8 @@ namespace MyGame
     public class PlayerReimu
     {
         private Texture2D texture;
-        private Rectangle sourceRect;
+        public Rectangle sourceRect;
+        public Rectangle boundingBox;
         private int currentFrame; // номер текущего кадра анимации
         private int frameWidth; // ширина кадра анимации
         private int frameHeight; // высота кадра анимации
@@ -25,9 +26,11 @@ namespace MyGame
         private KeyboardState keyboardState;
         private float speed;
         private bool isSlowMode;
-        private KeyboardState previousKeyboardState;
         private Shooting shooting;
         private double shootingDelay;
+        private Bonuses Bonuses;
+        private int maxPower = 128;
+        public int Power;
 
 
         public PlayerReimu(Vector2 startPosition, Texture2D playerTexture, float playerSpeed,
@@ -41,8 +44,10 @@ namespace MyGame
             this.frameHeight = frameHeight;
             this.framesPerRow = framesPerRow;
             this.frameCount = frameCount;
-            shooting = new Shooting();
+            shooting = new Shooting(this);
+            Bonuses = new Bonuses(new Vector2(200,70), this);
             playerTexture = Game1.Instance.Content.Load<Texture2D>("PlayerReimu");
+            this.boundingBox = new Rectangle((int)position.X, (int)position.Y, frameWidth, frameHeight);
 
             // Задаем начальные значения переменных анимации
             frameWidth = playerTexture.Width / framesPerRow;
@@ -53,7 +58,6 @@ namespace MyGame
             animationSpeed = 250;
             sourceRect = new Rectangle(0, 0, frameWidth, frameHeight);
         }
-
         public void Update(GameTime gameTime)
         {
             timeElapsed += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -67,13 +71,13 @@ namespace MyGame
                 }
                 timeElapsed = 0;
             }
+            Bonuses.Update(gameTime);
 
             // Обновляем прямоугольник с текущим кадром анимации
             int row = (int)((float)currentFrame / (float)framesPerRow);
             int column = currentFrame % framesPerRow;
             sourceRect = new Rectangle(frameWidth * column, frameHeight * row, frameWidth, frameHeight);
 
-            this.keyboardState = Keyboard.GetState();
 
             // Обновляем скорость персонажа на основе нажатых клавиш
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
@@ -123,13 +127,15 @@ namespace MyGame
                     position.X += currentSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
             }
+            boundingBox.Location = position.ToPoint();
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
             if (currentKeyboardState.IsKeyDown(Keys.Z) && gameTime.TotalGameTime.TotalSeconds > shootingDelay)
             {
                 Vector2 bulPos= position;
                 bulPos.X = bulPos.X + 19;
-                shooting.Shoot(bulPos); // передаем текущую позицию игрока
+                shooting.Shoot(bulPos); 
+                shooting.shoot.Play();
                 shootingDelay = gameTime.TotalGameTime.TotalSeconds + 0.1;
             }
 
@@ -141,6 +147,25 @@ namespace MyGame
         {
             spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
             shooting.Draw(spriteBatch);
+            Bonuses.Draw(spriteBatch);
         }
+        public void PowerUpPlus()
+        {
+            Power += 8;
+            if (Power > maxPower)
+            {
+                Power = maxPower;
+            }
+        }
+        public void PowerUp()
+        {
+            Power++;
+            if (Power > maxPower)
+            {
+                Power = maxPower;
+            }
+        }
+
+        
     }
 }

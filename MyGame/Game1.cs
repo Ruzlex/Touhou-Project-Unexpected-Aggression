@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace MyGame
 {
@@ -13,6 +15,9 @@ namespace MyGame
         private ScrollingBackground levelOneBack;
         public static Game1 Instance;
         PlayerReimu Reimu;
+
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -42,8 +47,9 @@ namespace MyGame
             Texture2D hud = Content.Load<Texture2D>("UI/HUD");
             Texture2D Player = Content.Load<Texture2D>("PlayerReimu");
             SpriteFont font = Content.Load<SpriteFont>("Roboto - regular");
-            levelOneBack = new ScrollingBackground(backgroundTexture, 2, hud, font);
+
             Reimu = new PlayerReimu(new Vector2(220,480), Player, 170f,32,48,4,4);
+            levelOneBack = new ScrollingBackground(backgroundTexture, 2, hud, font, Reimu);
 
             // TODO: use this.Content to load your game content here
             mainScreen.LoadContent(Content);
@@ -55,9 +61,8 @@ namespace MyGame
                 Exit();
             levelOneBack.Update(gameTime);
             Reimu.Update(gameTime);
+            
 
-            // TODO: Add your update logic here
-            //mainScreen.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -72,7 +77,7 @@ namespace MyGame
             //mainScreen.Draw(_spriteBatch);
             levelOneBack.Draw(_spriteBatch);
             Reimu.Draw(_spriteBatch);
-
+            
 
             _spriteBatch.End();
 

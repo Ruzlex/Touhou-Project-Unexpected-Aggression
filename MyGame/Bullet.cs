@@ -7,7 +7,7 @@ namespace MyGame
     {
         private Texture2D texture;
         private Vector2 position;
-        private Vector2 direction;
+        public Vector2 direction;
         private Rectangle size;
         private float speed;
 
@@ -27,7 +27,7 @@ namespace MyGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, size, Color.White);
+            spriteBatch.Draw(texture, position, size, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
         }
     }
 }
