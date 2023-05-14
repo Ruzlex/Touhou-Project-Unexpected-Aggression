@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using System;
 
 namespace MyGame
 {
-    public class Bullet
+    public class HomingBullet
     {
         public Texture2D texture;
         private Vector2 position;
@@ -11,22 +12,22 @@ namespace MyGame
         private Rectangle size;
         private float speed;
         public float rotationAngle;
-        public Rectangle boundingBox;
-        public Bullet(Texture2D texture, Vector2 position, Rectangle size, float speed)
+        private Enemy enemy;
+
+        public HomingBullet(Texture2D texture, Vector2 position, Rectangle size, float speed, Enemy enemy)
         {
             this.texture = texture;
             this.position = position;
             this.size = size;
             direction = new Vector2(0, -1);
+            this.enemy = enemy;
             this.speed = speed;
             rotationAngle = 0f;
-            boundingBox = new Rectangle((int)position.X, (int)position.Y, size.Width, size.Height);
         }
 
         public void Update(GameTime gameTime)
         {
             position += direction * speed;
-            boundingBox.Location = position.ToPoint();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -38,6 +39,13 @@ namespace MyGame
         public void SetRotationAngle(float angle)
         {
             rotationAngle = angle;
+        }
+        
+        public void FindWay(Vector2 direction, Enemy enemy)
+        {
+            Vector2 enemyPosition = enemy.position + new Vector2(20, 30);
+            direction = enemyPosition - position;
+            direction.Normalize();
         }
     }
 }

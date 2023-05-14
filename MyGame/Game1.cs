@@ -15,6 +15,8 @@ namespace MyGame
         private ScrollingBackground levelOneBack;
         public static Game1 Instance;
         PlayerReimu Reimu;
+        Enemies enemy;
+        HUD Hud;
 
 
 
@@ -44,12 +46,16 @@ namespace MyGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Texture2D backgroundTexture = Content.Load<Texture2D>("UI/LevelOneBackground");
-            Texture2D hud = Content.Load<Texture2D>("UI/HUD");
-            Texture2D Player = Content.Load<Texture2D>("PlayerReimu");
+            Texture2D hudTexture = Content.Load<Texture2D>("UI/HUD");
             SpriteFont font = Content.Load<SpriteFont>("Roboto - regular");
 
-            Reimu = new PlayerReimu(new Vector2(220,480), Player, 170f,32,48,4,4);
-            levelOneBack = new ScrollingBackground(backgroundTexture, 2, hud, font, Reimu);
+            Reimu = new PlayerReimu(new Vector2(220, 480), 170f, 32, 48, 4, 4);
+            Hud = new HUD(hudTexture, font, Reimu);
+            enemy = new Enemies(new Rectangle(8, 6, 20, 24), 0f, 1f, Reimu, 2);
+
+
+            
+            levelOneBack = new ScrollingBackground(backgroundTexture, 2);
 
             // TODO: use this.Content to load your game content here
             mainScreen.LoadContent(Content);
@@ -59,8 +65,10 @@ namespace MyGame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            Hud.Update(gameTime);
             levelOneBack.Update(gameTime);
             Reimu.Update(gameTime);
+            enemy.Update(gameTime, Reimu.shooting);
             
 
             base.Update(gameTime);
@@ -75,14 +83,26 @@ namespace MyGame
 
             // Рисуем главное меню
             //mainScreen.Draw(_spriteBatch);
-            levelOneBack.Draw(_spriteBatch);
-            Reimu.Draw(_spriteBatch);
             
+            levelOneBack.Draw(_spriteBatch);
 
+            Reimu.Draw(_spriteBatch);
+            enemy.Draw(_spriteBatch);
+            Hud.Draw(_spriteBatch);
             _spriteBatch.End();
 
 
             base.Draw(gameTime);
+        }
+    }
+
+    public static class RandomHelper
+    {
+        private static readonly Random _random = new Random();
+
+        public static int Next(int minValue, int maxValue)
+        {
+            return _random.Next(minValue, maxValue);
         }
     }
 }
