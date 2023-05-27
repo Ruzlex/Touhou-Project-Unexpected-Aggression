@@ -46,7 +46,7 @@ namespace MyGame
                 for (int i = 0; i < bonusesList.Count; i++)
                 {
                     bonusesList[i].Update(gameTime);
-                    
+
                     if (bonusesList[i].type == BonusType.Graze)
                     {
                         float distanceToPlayer = Vector2.Distance(position, player.position);
@@ -58,54 +58,54 @@ namespace MyGame
                     CheckCollision(player, bonusesList[i]);
                 }
             }
-            if(Keyboard.GetState().IsKeyDown(Keys.Q))
-            {
-                Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.PowerUp));
-                bonus.type = BonusType.PowerUp;
-                bonusesList.Add(bonus);
-            }
+            //if(Keyboard.GetState().IsKeyDown(Keys.Q))
+            //{
+            //    Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.PowerUp));
+            //    bonus.type = BonusType.PowerUp;
+            //    bonusesList.Add(bonus);
+            //}
 
-            if (Keyboard.GetState().IsKeyDown(Keys.U))
-            {
-                Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.PowerUpPlus));
-                bonus.type = BonusType.PowerUpPlus;
-                bonusesList.Add(bonus);
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.U))
+            //{
+            //    Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.PowerUpPlus));
+            //    bonus.type = BonusType.PowerUpPlus;
+            //    bonusesList.Add(bonus);
+            //}
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {
-                Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.ScoreBonus));
-                bonus.type = BonusType.ScoreBonus;
-                bonusesList.Add(bonus);
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.W))
+            //{
+            //    Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.ScoreBonus));
+            //    bonus.type = BonusType.ScoreBonus;
+            //    bonusesList.Add(bonus);
+            //}
 
-            if (Keyboard.GetState().IsKeyDown(Keys.E))
-            {
-                Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.HpPlus));
-                bonus.type = BonusType.HpPlus;
-                bonusesList.Add(bonus);
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.E))
+            //{
+            //    Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.HpPlus));
+            //    bonus.type = BonusType.HpPlus;
+            //    bonusesList.Add(bonus);
+            //}
 
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
-            {
-                Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.BombPlus));
-                bonus.type = BonusType.BombPlus;
-                bonusesList.Add(bonus);
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.R))
+            //{
+            //    Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.BombPlus));
+            //    bonus.type = BonusType.BombPlus;
+            //    bonusesList.Add(bonus);
+            //}
 
-            if (Keyboard.GetState().IsKeyDown(Keys.T))
-            {
-                Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.FullPower));
-                bonus.type = BonusType.FullPower;
-                bonusesList.Add(bonus);
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.T))
+            //{
+            //    Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.FullPower));
+            //    bonus.type = BonusType.FullPower;
+            //    bonusesList.Add(bonus);
+            //}
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Y))
-            {
-                Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.Graze));
-                bonus.type = BonusType.Graze;
-                bonusesList.Add(bonus);
-            }
+            //if (Keyboard.GetState().IsKeyDown(Keys.Y))
+            //{
+            //    Bonus bonus = new Bonus(texture, position, WhichTexture(BonusType.Graze));
+            //    bonus.type = BonusType.Graze;
+            //    bonusesList.Add(bonus);
+            //}
         }
 
         public void Draw(SpriteBatch spriteBatch)

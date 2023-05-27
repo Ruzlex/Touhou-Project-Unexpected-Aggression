@@ -15,7 +15,7 @@ namespace MyGame
         private ScrollingBackground levelOneBack;
         public static Game1 Instance;
         PlayerReimu Reimu;
-        Enemies enemy;
+        Level1 level1;
         HUD Hud;
 
 
@@ -48,10 +48,9 @@ namespace MyGame
             Texture2D backgroundTexture = Content.Load<Texture2D>("UI/LevelOneBackground");
             Texture2D hudTexture = Content.Load<Texture2D>("UI/HUD");
             SpriteFont font = Content.Load<SpriteFont>("Roboto - regular");
-
-            Reimu = new PlayerReimu(new Vector2(220, 480), 170f, 32, 48, 4, 4);
-            Hud = new HUD(hudTexture, font, Reimu);
-            enemy = new Enemies(new Rectangle(8, 6, 20, 24), 0f, 1f, Reimu, 2);
+            level1 = new Level1(backgroundTexture);
+            Hud = new HUD(hudTexture, font, level1.player);
+            
 
 
             
@@ -66,9 +65,8 @@ namespace MyGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             Hud.Update(gameTime);
-            levelOneBack.Update(gameTime);
-            Reimu.Update(gameTime);
-            enemy.Update(gameTime, Reimu.shooting);
+            level1.Update(gameTime);
+
             
 
             base.Update(gameTime);
@@ -84,10 +82,7 @@ namespace MyGame
             // Рисуем главное меню
             //mainScreen.Draw(_spriteBatch);
             
-            levelOneBack.Draw(_spriteBatch);
-
-            Reimu.Draw(_spriteBatch);
-            enemy.Draw(_spriteBatch);
+            level1.Draw(_spriteBatch);
             Hud.Draw(_spriteBatch);
             _spriteBatch.End();
 

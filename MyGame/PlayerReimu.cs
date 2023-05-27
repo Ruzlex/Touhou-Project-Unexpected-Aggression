@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using Microsoft.Xna.Framework.Input;
+using static MyGame.Bonuses;
 
 namespace MyGame
 {
@@ -40,7 +41,7 @@ namespace MyGame
         private TimeSpan bombTimer;
         private TimeSpan bombDuration;
         public bool isImmortal = false;
-
+        private KeyboardState previousState;
 
 
 
@@ -153,13 +154,27 @@ namespace MyGame
             }
 
             shooting.Update(gameTime);
-            if (currentKeyboardState.IsKeyDown(Keys.X))
+            if (isBombActive == false)
             {
-                UseBomb();
+                if (currentKeyboardState.IsKeyDown(Keys.X) && !previousState.IsKeyDown(Keys.X) && BombsCount > 0)
+                {
+                    UseBomb();
+                    BombsCount--;
+                }
             }
+            previousState = Keyboard.GetState();
             bombs.Update(gameTime);
             if (isBombActive)
             {
+                if (bonusesList.Count > 0)
+                {
+                    for (int i = 0; i < bonusesList.Count; i++)
+                    {
+                        bonusesList[i].Update(gameTime);
+                        bonusesList[i].AttractToPlayer(this, 10f, gameTime);                        
+                        CheckCollision(this, bonusesList[i]);
+                    }
+                }
                 if (isDrawingBombImage)
                 {
                     bombImageTimer += gameTime.ElapsedGameTime;
@@ -189,7 +204,7 @@ namespace MyGame
         {
             if (isDrawingBombImage)
             {
-                spriteBatch.Draw(bombImage, new Vector2(50, 50), new Rectangle(0, 0, 763, 877), Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(bombImage, new Vector2(30, 250), new Rectangle(0, 0, 763, 877), Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
             }
             spriteBatch.Draw(texture, position, sourceRect, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0f);
             shooting.Draw(spriteBatch);
@@ -223,20 +238,11 @@ namespace MyGame
             if (!isBombActive)
             {
                 isBombActive = true;
-                // Воспроизвести звук бомбы
-                // Отобразить изображение игрока слева в виде картинки на пару секунд
                 isDrawingBombImage = true;
-                bombImageDuration = TimeSpan.FromSeconds(2.0); // Пример: изображение отображается 2 секунды
+                bombImageDuration = TimeSpan.FromSeconds(2.0);
                 bombImageTimer = TimeSpan.Zero;
-                bombDuration = TimeSpan.FromSeconds(5.0); // Пример: изображение отображается 2 секунды
+                bombDuration = TimeSpan.FromSeconds(5.0);
                 bombTimer = TimeSpan.Zero;
-
-                
-
-                // Затем из самого игрока вылетают снаряды к ближайшим противникам
-                // Уничтожают их и их пули
-                // Игрок на это время становится бессмертным
-                // Игровое поле становится темнее
             }
         }
     }

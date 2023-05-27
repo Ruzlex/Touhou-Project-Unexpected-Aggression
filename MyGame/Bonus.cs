@@ -20,7 +20,7 @@ namespace MyGame
             this.position = position;
             this.size = size;
             direction = new Vector2(0, +1);
-            speed = 3f;
+            speed = 2f;
             boundingBox = new Rectangle((int)position.X, (int)position.Y, size.Width, size.Height);
         }
         public void AttractToPlayer(PlayerReimu player, float speed, GameTime gameTime)

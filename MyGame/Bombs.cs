@@ -14,6 +14,7 @@ namespace MyGame
         public PlayerReimu player;
         public static List<Enemy> enemies;
         public Rectangle boundingBox;
+
         public Bombs(PlayerReimu player, Vector2 position)
         {
             bombs = new List<Bomb>();
@@ -45,7 +46,7 @@ namespace MyGame
 
         public void ShootBombs()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < Enemies.enemies.Count; i++)
             {
                 Vector2 bombPosition = new Vector2(position.X, position.Y);
                 Bomb bomb = new Bomb(texture, sourceRect, bombPosition, 10f);
@@ -63,8 +64,9 @@ namespace MyGame
 
                     if (bombs[j].boundingBox.Intersects(Enemies.enemies[j].boundingBox))
                     {
+                    Enemies.DeathBons(Enemies.enemies[j].BonsID, Enemies.enemies[j].position);
                         Enemies.enemies.RemoveAt(j);
-                        Enemies.DeathBons(rnd);
+
                     }
                 for (int w = 0; w < Enemies.enemBullets.Count; w++)
                 {
