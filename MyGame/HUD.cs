@@ -12,11 +12,6 @@ namespace MyGame
     {
         private Texture2D hud;
         private SpriteFont font;
-        private int score;
-        private int lives;
-        private int bombs;
-        private int power;
-        private int graze;
         public PlayerReimu player;
 
         public HUD(Texture2D hud, SpriteFont font, PlayerReimu player)

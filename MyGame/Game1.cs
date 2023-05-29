@@ -79,7 +79,6 @@ namespace MyGame
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
 
-            // Рисуем главное меню
             //mainScreen.Draw(_spriteBatch);
             
             level1.Draw(_spriteBatch);

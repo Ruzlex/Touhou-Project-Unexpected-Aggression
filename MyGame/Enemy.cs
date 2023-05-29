@@ -68,13 +68,11 @@ namespace MyGame
             SetTarget();
             CheckPosition();
             boundingBox.Location = position.ToPoint();
-            // Отсчет времени между выстрелами.
             if (position.X > 50 && position.X < 554 && position.Y > 31 && position.Y < 562)
             {
                 shotTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (shotTimer >= shotInterval)
                 {
-                    // Сбрасываем таймер и выстреливаем пулю.
                     shotTimer = 0;
                     Shoot();
                 }
@@ -127,24 +125,20 @@ namespace MyGame
 
         private void ShootStraightLine()
         {
-            // Создаем новую пулю и добавляем ее в список пуль.
             Vector2 bulletPosition = new Vector2(position.X + 8, position.Y);
             EnemBullet bullet = new EnemBullet(bulletTexture, bulletPosition, new Rectangle(17, 49, 16, 16), 3f);
             Enemies.enemBullets.Add(bullet);
 
-            // Направляем пулю вниз по прямой линии.
             Vector2 direction = new Vector2(0, 1);
             bullet.SetDirection(direction);
         }
 
         private void ShootTowardsPlayer(PlayerReimu player)
         {
-            // Создаем новую пулю и добавляем ее в список пуль.
             Vector2 bulletPosition = new Vector2(position.X + 8, position.Y);
             EnemBullet bullet = new EnemBullet(bulletTexture, bulletPosition, new Rectangle(17, 49, 16, 16), 3f);
             Enemies.enemBullets.Add(bullet);
 
-            // Находим игрока и направляем пулю в его сторону.
             Vector2 playerPosition = player.position + new Vector2(20, 30);
             Vector2 direction = playerPosition - bulletPosition;
             direction.Normalize();
@@ -153,15 +147,13 @@ namespace MyGame
 
         private void ShootBulletSpray(int bulletCount)
         {
-            float angleStep = MathHelper.TwoPi / bulletCount; // Угол между каждой пулей
+            float angleStep = MathHelper.TwoPi / bulletCount;
 
             for (int i = 0; i < bulletCount; i++)
             {
-                // Вычисляем направление для каждой пули
                 float angle = i * angleStep;
                 Vector2 direction = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
 
-                // Создаем новую пулю и добавляем ее в список пуль
                 Vector2 bulletPosition = new Vector2(position.X + 8, position.Y);
                 EnemBullet bullet = new EnemBullet(bulletTexture, bulletPosition, new Rectangle(17, 49, 16, 16), 3f);
                 Enemies.enemBullets.Add(bullet);

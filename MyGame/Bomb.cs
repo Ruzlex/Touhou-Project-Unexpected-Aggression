@@ -23,7 +23,6 @@ namespace MyGame
 
         public void Update(GameTime gameTime)
         {
-            // Обновление позиции снаряда в соответствии с его скоростью и временем
             position += direction * speed;
             boundingBox.Location = position.ToPoint();
         }

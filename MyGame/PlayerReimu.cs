@@ -12,14 +12,14 @@ namespace MyGame
         public Rectangle sourceRect;
         public Rectangle boundingBox;
         public Rectangle hitbox;
-        private int currentFrame; // номер текущего кадра анимации
-        private int frameWidth; // ширина кадра анимации
-        private int frameHeight; // высота кадра анимации
-        private int framesPerRow; // количество кадров в строке текстуры
-        private int rows=1; // количество строк кадров анимации
-        private int frameCount; // общее количество кадров анимации
-        private double animationSpeed; // скорость анимации
-        private double timeElapsed; // время, прошедшее с прошлого обновления кадра анимации
+        private int currentFrame;
+        private int frameWidth;
+        private int frameHeight;
+        private int framesPerRow;
+        private int rows=1; 
+        private int frameCount; 
+        private double animationSpeed; 
+        private double timeElapsed; 
         public Vector2 position;
         private float speed;
         private bool isSlowMode;
@@ -61,7 +61,6 @@ namespace MyGame
             bombImage = Game1.Instance.Content.Load<Texture2D>("AngryReimu");
             boundingBox = new Rectangle((int)position.X, (int)position.Y, (int)(frameWidth *1.5),(int)(frameHeight*1.5));
             hitbox = new Rectangle((int)position.X + 16, (int)position.Y + 30, 12, 12);
-            // Задаем начальные значения переменных анимации
             frameWidth = texture.Width / framesPerRow;
             frameHeight = texture.Height / rows;
             //frameCount = framesPerRow * rows;
@@ -76,7 +75,6 @@ namespace MyGame
             timeElapsed += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (timeElapsed > animationSpeed)
             {
-                // Обновляем текущий кадр анимации
                 currentFrame++;
                 if (currentFrame == frameCount)
                 {
@@ -86,13 +84,12 @@ namespace MyGame
             }
             Bonuses.Update(gameTime);
             
-            // Обновляем прямоугольник с текущим кадром анимации
             int row = (int)((float)currentFrame / (float)framesPerRow);
             int column = currentFrame % framesPerRow;
             sourceRect = new Rectangle(frameWidth * column, frameHeight * row, frameWidth, frameHeight);
 
 
-            // Обновляем скорость персонажа на основе нажатых клавиш
+
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Keys.RightShift))
             {
                 isSlowMode = true;
@@ -102,16 +99,14 @@ namespace MyGame
                 isSlowMode = false;
             }
 
-            // Вычисляем скорость в зависимости от того, включен ли режим замедления
             float currentSpeed = isSlowMode ? speed / 2 : speed;
 
-            // Обновляем позицию персонажа
             const int GAME_FIELD_LEFT_BOUND = 47;
-            const int GAME_FIELD_RIGHT_BOUND = 543; // ширина игрового поля
+            const int GAME_FIELD_RIGHT_BOUND = 543;
             const int GAME_FIELD_TOP_BOUND = 27;
-            const int GAME_FIELD_BOTTOM_BOUND = 550; // высота игрового поля
+            const int GAME_FIELD_BOTTOM_BOUND = 550; 
 
-            // Обновляем позицию персонажа
+
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
                 if (position.Y - currentSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds >= GAME_FIELD_TOP_BOUND)

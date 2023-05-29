@@ -31,23 +31,10 @@ namespace MyGame
         }
         public void Update(GameTime gameTime)
         {
-            // Обновляем всех врагов.
             for (int i = 0; i < enemies.Count; i++)
             {
                 enemies[i].Update(gameTime);
             }
-
-            //if (Keyboard.GetState().IsKeyDown(Keys.H) && !previousState.IsKeyDown(Keys.H))
-            //{
-
-            //    var x = RandomHelper.Next(100, 400);
-            //    var y = RandomHelper.Next(25, 150);
-            //    position = new Vector2(x, y);
-            //    SpawnEnemy(position);
-
-
-            //}
-            previousState = Keyboard.GetState();
             for (int i = 0; i < enemies.Count; i++)
             {
                 if (enemies[i].position.X < 35 || enemies[i].position.X > 570)
@@ -103,7 +90,6 @@ namespace MyGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            // Рисуем всех врагов.
             for (int i = 0; i < enemies.Count; i++)
             {
                 enemies[i].Draw(spriteBatch);
@@ -115,12 +101,6 @@ namespace MyGame
             }
         }
 
-        //public void SpawnEnemy(Vector2 position)
-        //{
-        //    Enemy enemy = new Enemy(texture, position, size, speed, shotInterval, player, enemyHp);
-        //    enemy.AttackType = AttackType.TowardsPlayer;
-        //    enemies.Add(enemy);
-        //}
 
         public static void DeathBons(int bonsId, Vector2 position)
         {

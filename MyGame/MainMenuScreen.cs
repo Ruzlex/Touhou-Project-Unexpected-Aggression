@@ -45,10 +45,8 @@ namespace MyGame
         }
         public void LoadContent(ContentManager content)
         {
-            // Загрузить шрифты
             //menuFont = content.Load<SpriteFont>("Roboto - regular");
 
-            // Загрузить фоновое изображение
             backgroundTexture = content.Load<Texture2D>("MainMenuBackground");
         }
         public void Draw(SpriteBatch spriteBatch)

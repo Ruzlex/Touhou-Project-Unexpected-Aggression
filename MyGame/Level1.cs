@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection.Metadata;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace MyGame
 {
@@ -17,6 +20,11 @@ namespace MyGame
         private int waveCount;
         private float waveTimer;
         Rectangle size;
+        bool startDialogue = false;
+        private KeyboardState previousState;
+        Marisa marisa = new Marisa();
+        bool startBossFight = false;
+        Song song;
         public Level1(Texture2D backgroundTexture)
         {
             background = new ScrollingBackground(backgroundTexture, 2);
@@ -25,6 +33,10 @@ namespace MyGame
             enemies = new Enemies(player);
             waveCount = 1;
             waveTimer = 0f;
+            song = Game1.Instance.Content.Load<Song>("Level1music");
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
+
         }
 
         private void SpawnFirstWave()
@@ -32,7 +44,7 @@ namespace MyGame
             Enemy enemy1 = new Enemy(enemies.texture, new Vector2(200, 15), size, 100f, 2.0f, player, 1, 0, new Vector2(200, 200), new Vector2(580,200), 5, 0);
             enemy1.AttackType = AttackType.StraightLine;           
             Enemies.enemies.Add(enemy1);
-            
+
             Enemy enemy2 = new Enemy(enemies.texture, new Vector2(100, -50), size, 100f, 2.0f, player, 1, 1, new Vector2(100, 150), new Vector2(30, 150), 5, 0);
             enemy2.AttackType = AttackType.StraightLine;
             Enemies.enemies.Add(enemy2);
@@ -299,6 +311,7 @@ namespace MyGame
             background.Update(gameTime);
             enemies.Update(gameTime);
             player.Update(gameTime);
+            marisa.Update(gameTime);
             if (waveCount == 1)
             {
                 waveTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -342,13 +355,22 @@ namespace MyGame
                     waveCount++;
                 }
             }
-        }
+            else
+            {
+                waveTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (waveTimer >= 5)
+                {
+                    marisa.startFight = true;
+                }
+            }
 
+        }
         public void Draw(SpriteBatch spriteBatch)
         {
             background.Draw(spriteBatch);
             enemies.Draw(spriteBatch);
             player.Draw(spriteBatch);
+            marisa.Draw(spriteBatch);
         }
 
     }

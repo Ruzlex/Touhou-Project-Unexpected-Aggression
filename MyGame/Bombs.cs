@@ -21,7 +21,6 @@ namespace MyGame
             texture = Game1.Instance.Content.Load<Texture2D>("PlayerReimu");
             sourceRect = new Rectangle(5, 104, 54, 50);
             this.player = player;
-            //enemies = new List<Enemy>();
             this.position = position;
             this.boundingBox = new Rectangle((int)position.X, (int)position.Y, sourceRect.Width, sourceRect.Height);
         }
