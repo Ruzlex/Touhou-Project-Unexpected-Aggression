@@ -20,7 +20,7 @@ namespace MyGame
             this.font = font;
             this.player = player;
             player.Score = 0;
-            player.HP = 3;
+            player.HP = 5;
             player.BombsCount = 3;
             player.Power = 0;
             player.Graze = 0;
