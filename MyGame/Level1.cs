@@ -20,10 +20,6 @@ namespace MyGame
         private int waveCount;
         private float waveTimer;
         Rectangle size;
-        bool startDialogue = false;
-        private KeyboardState previousState;
-        Marisa marisa = new Marisa();
-        bool startBossFight = false;
         Song song;
         public Level1(Texture2D backgroundTexture)
         {
@@ -311,7 +307,6 @@ namespace MyGame
             background.Update(gameTime);
             enemies.Update(gameTime);
             player.Update(gameTime);
-            marisa.Update(gameTime);
             if (waveCount == 1)
             {
                 waveTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -355,22 +350,12 @@ namespace MyGame
                     waveCount++;
                 }
             }
-            else
-            {
-                waveTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (waveTimer >= 5)
-                {
-                    marisa.startFight = true;
-                }
-            }
-
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             background.Draw(spriteBatch);
             enemies.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            marisa.Draw(spriteBatch);
         }
 
     }
