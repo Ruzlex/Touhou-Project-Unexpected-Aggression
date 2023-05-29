@@ -68,7 +68,7 @@ namespace MyGame
                 {
                     bonuses.MinusBonuses();
                     player.position = new Vector2(220, 480);
-
+                    player.HP = -1;
                     enemBullets.RemoveAt(i);
                 }
 
